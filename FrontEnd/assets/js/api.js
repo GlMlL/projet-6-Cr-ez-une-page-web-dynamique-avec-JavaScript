@@ -1,77 +1,108 @@
-/***variables***/
+                          /***variables***/
+
+// Sélectionne l'élément HTML avec la classe "gallery" et le stocke dans la variable gallery
 const gallery = document.querySelector('.gallery'); /* récupère ma classe css*/
+
+// Sélectionne l'element HTML avec la classe "filters" et le stocke dans la variable Filters
 const Filters = document.querySelector(".filters");
+
+let workStore = Array(); //Initialise un tableau vide nommé workStore
+
 /* fonction qui retourne le tableau des works*/
 
+// Fonction asynchrone qui recupere les works depuis l'API
 async function getWorks() {
     const response = await fetch('http://localhost:5678/api/works');
-    return await response.json();
-    
+    return await response.json(); // Renvoie les works au format json
 }
 
+                  /* affichage des works */
 
-/* affichage des works */
+// Fonction asynchrone qui affiche les works
 async function displayWorks() {
-    const arrayWorks = await getWorks();
-    arrayWorks.forEach((Work) => {
-    createWorkElement(Work);
-   });
-}
-
-displayWorks() 
-
-
-function createWorkElement(Work){  
-    const figure = document.createElement('figure')
-    const img = document.createElement('img')
-    const figcaption = document.createElement('figcaption')
-    img.src = Work.imageUrl;
-    figcaption.textContent = Work.title;
-    figure.appendChild(img)
-    figure.appendChild(figcaption)
-    gallery.appendChild(figure)
-} 
- 
-
-// récupération du tableau des categories
-
-async function GetCategorys() {
-    const response = await fetch('http://localhost:5678/api/categories');
-    return await response.json();
-}
-
-async function displayCategorysbutton() {
-    const categorys = await GetCategorys();
-    categorys.forEach((category) => {
-        const btn = document.createElement("button");
-        btn.textContent = category.name.toUpperCase();
-        btn.id = category.id;
-        Filters.appendChild(btn);
+    // Récupere les works depuis l'API et les stocke dans WorkStore
+    workStore = await getWorks();
+    workStore.forEach((Work) =>{
+    createWorkElement(Work); //Appelle la fonction createWorkElement pour chaque work
     });
 }
-displayCategorysbutton();
 
-// filtrage au click par categorie
+displayWorks(); // Appelle la fonction displayWorks pour afficher les works au chargement de la page
 
-async function filterCategory(){
-    const workStore = await getWorks();
-    const buttons = document.querySelectorAll(".filters button");
-    buttons.forEach(button => {
-        button.addEventListener("click",(e) =>{
-        btnId = e.target.id;
-        gallery.innerHTML ="";// nettoie la gallery
-        if (btnId !== "0") {
-            const sortByWork = workStore.filter((Work)=>{
-                return Work.categoryId == btnId;
-            });
-            sortByWork.forEach(Work => {
-                createWorkElement(Work);
-                
-            });
-        }else{
-            displayWorks();
-        }
-        });
-    })
+// Fonction qui cree un element HTML representant un work
+function createWorkElement(Work){  
+    const figure = document.createElement('figure'); // Crée un élément <figure>
+    const img = document.createElement('img'); // Crée un élément <img>
+    const figcaption = document.createElement('figcaption'); // Crée un élément <figcaption>
+
+    // Définit l'URL de l'image du work
+    img.src = Work.imageUrl;
+
+    // Affiche le texte de l'image du work
+    figcaption.textContent = Work.title;
+
+    // Ajoute l'element img comme 1er enfant de figure
+    figure.appendChild(img);
+
+    // Ajoute l'element figcaption comme 1er enfant de figure
+    figure.appendChild(figcaption);
+
+    // Ajoute l'element figure comme 1er enfant de gallery
+    gallery.appendChild(figure);
+} 
+// récupération du tableau des categories
+
+                 //*affichage des boutton //*
+
+// Fonction asynchrone qui recupere les categories depuis l'API
+async function GetCategorys() {
+    const response = await fetch('http://localhost:5678/api/categories');
+    return await response.json(); // Renvoie les categories au format json
 }
-filterCategory();
+
+// Fonction asynchrone qui va gerer l'affichage des bouttons
+async function displayCategorysbutton() {
+    // Recupere les categories depuis l'API et les stocke dans la variable categorys
+    const categorys = await GetCategorys();
+
+    // Pour chaque categorie, cree un bouton et l'ajoute à l'element Filters
+    categorys.forEach((category) => {
+        const btn = document.createElement("button"); // Cree un element <button>
+        btn.textContent = category.name.toUpperCase(); // Definit le texte du bouton
+        btn.id = category.id; // Definit l'ID du bouton
+        Filters.appendChild(btn); // Ajoute le bouton à l'élément Filters
+    });
+}
+
+displayCategorysbutton(); // Appelle la fonction displayCategorysbutton pour afficher les catégories en boutton
+
+                    //* filtrage au click par categorie//*
+
+// Fonction asynchrone qui filtre les travaux en fonction de la categorie selectionnée
+async function filterCategory(){
+    const workStore = await getWorks(); // Récupere les works depuis l'API et les stocke dans workStore
+    const buttons = document.querySelectorAll(".filters button"); // Selectionne tous les boutons de categorie
+
+    // Pour chaque bouton, ajoute un ecouteur d'evenements pour le clic
+    buttons.forEach(button => {
+        button.addEventListener("click",(e) => { // (e)= fonction de rappel raccourci pour event
+            btnId = e.target.id; // Récupère l'ID du bouton cliqué et stocke l'Id dans btnId
+            gallery.innerHTML = ""; // Nettoie le contenu de la galerie
+
+            if (btnId !== "0") { //!== est l'opérateur de comparaison strictement différent en js
+                // Filtre les works pour ne garder que ceux appartenant a la categorie selectionnée
+                const sortByWork = workStore.filter((Work) => {
+                    return Work.categoryId == btnId;
+                });  //filtre le workStore en fonction de l'Id
+                
+                // Pour chaque work filtré, cree un element correspondant
+                sortByWork.forEach(Work => {
+                    createWorkElement(Work); // Appelle la fonction createWorkElement pour chaque work
+                });
+            } else {
+                displayWorks(); // appelle la fonction qui tout les works quand on clique sur le boutton tous grace au 1er ftehc
+            }
+        });
+    });
+}
+filterCategory(); // Appelle la fonction filterCategory pour activer le filtrage par categorie
