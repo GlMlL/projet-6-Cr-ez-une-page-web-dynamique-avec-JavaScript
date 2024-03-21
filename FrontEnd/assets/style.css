@@ -69,8 +69,10 @@ h1{
 	font-family: 'Syne';
 	font-size: 22px;
 	font-weight: 800;
-	color: #B1663C
+	color: #B1663C;
+	
 }
+
 
 h1 > span {
 	font-family: 'Work Sans';
@@ -96,8 +98,10 @@ nav li {
 	font-size: 1.2em;
 }
 
+
 li:hover {
 	color: #B1663C;
+	cursor: pointer;
 }
 #introduction {
 	display: flex;
@@ -154,6 +158,7 @@ margin: auto;
 	margin-top:30px;
 	display: flex;
 	flex-direction: column;
+	align-items: center;
 }
 
 #contact input {
@@ -208,14 +213,15 @@ footer nav ul {
 	color: white;
 }
 
-#loginButton {
+.loginButton {
+	display: flex;
+	justify-content: center;
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
 	background-color: #1D6154;
 	margin : 2em auto ;
 	width: 180px;
-	text-align: center;
 	border-radius: 60px ;
 	height: 36px;
 	font-size: 1.2em;
@@ -242,15 +248,32 @@ input{
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 	width: 25em;
+	cursor: pointer;
 }
 
 .log h2{
 	margin: 2em;
 }
 
-.log button{
-	text-align: center;
+
+label{
+	font-family: work sans ;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 17px;
 }
+
+#forgottenmdp {
+	display: flex;
+	justify-content: center;
+}
+
+
+
+
+
+
+
 
 
 
