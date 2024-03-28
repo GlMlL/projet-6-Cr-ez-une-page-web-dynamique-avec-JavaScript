@@ -106,3 +106,9 @@ async function filterCategory(){
     });
 }
 filterCategory(); // Appelle la fonction filterCategory pour activer le filtrage par categorie
+
+
+  
+  
+  
+  
