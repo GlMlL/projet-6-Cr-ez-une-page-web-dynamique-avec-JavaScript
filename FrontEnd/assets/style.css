@@ -270,6 +270,30 @@ label{
 
 
 
+.modal-content{
+	display: flex;
+	position: fixed;
+	inset: 0;
+	z-index: 10000;
+	background-color: rgba(0, 0, 0, 0.75);
+	padding: 40px;
+	overflow: auto;
+	width: 100%;
+	height: 100%;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

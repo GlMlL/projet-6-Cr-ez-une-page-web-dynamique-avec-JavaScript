@@ -7,11 +7,14 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 	 <!--defer pour que le script soit lu après la page HTML-->
 	 <script src="assets/js/api.js" defer></script>
 	 <script src="assets/js/logout.js" defer></script>
+	 <script src="assets/js/modal.js" defer> </script>
+	 
 </head>
 <body>
 <header class="menu">
@@ -68,5 +71,13 @@
 		</ul>
 	</nav>
 </footer>
+<!-- Structure HTML de la modal -->
+<div id="myModal" class="modal">
+	<div class="modal-content">
+	  <span class="close"></span>
+	  <h4>Gallerie photo</h4>
+	  <button id="confirmDelete">Supprimer</button>
+	</div>
+  </div>
 </body>
 </html>

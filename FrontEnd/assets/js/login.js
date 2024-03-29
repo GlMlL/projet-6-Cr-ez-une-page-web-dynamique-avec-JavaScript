@@ -49,4 +49,3 @@ const connect = () => {
       formInfo.reset();
     });
 };
-
