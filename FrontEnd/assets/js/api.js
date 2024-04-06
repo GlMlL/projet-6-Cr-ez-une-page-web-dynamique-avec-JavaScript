@@ -16,7 +16,7 @@ async function getWorks() {
     return await response.json(); // Renvoie les works au format json
 }
 
-                /* affichage des works */
+/* affichage des works */
 
 // Fonction asynchrone qui affiche les works
 async function displayWorks() {
@@ -50,9 +50,10 @@ function createWorkElement(Work){
     // Ajoute l'element figure comme 1er enfant de gallery
     gallery.appendChild(figure);
 } 
+
 // récupération du tableau des categories
 
-                //*affichage des boutton //*
+//*affichage des boutton //*
 
 // Fonction asynchrone qui recupere les categories depuis l'API
 async function GetCategorys() {
@@ -76,7 +77,7 @@ async function displayCategorysbutton() {
 
 displayCategorysbutton(); // Appelle la fonction displayCategorysbutton pour afficher les catégories en boutton
 
-                    //* filtrage au click par categorie//*
+//* filtrage au click par categorie//*
 
 // Fonction asynchrone qui filtre les travaux en fonction de la categorie selectionnée
 async function filterCategory(){
@@ -107,53 +108,169 @@ async function filterCategory(){
 }
 filterCategory(); // Appelle la fonction filterCategory pour activer le filtrage par categorie
 
-// Sélectionnez l'élément parent contenant le titre "Mes Projets"
-const projectsTitle = document.querySelector('#portfolio h2');
-
-// Fonction pour créer le bouton "Modifier"
-function createModifierButton() {
-    // Vérifiez si l'utilisateur est connecté en vérifiant la présence du jeton d'authentification dans le sessionStorage
-    if (sessionStorage.getItem("Token")) {
-        // Créez un bouton pour la modification
-        const modifierButton = document.createElement('button');
-        modifierButton.textContent = 'Modifier';
-        modifierButton.classList.add('modifier-button');
-
-        // Ajoutez un gestionnaire d'événements pour le clic sur le bouton Modifier
-        modifierButton.addEventListener('click', () => {
-            const modal = document.getElementById("myModal");
-            modal.style.display = "block"; // Affiche la modal lorsque le bouton "Modifier" est cliqué
-        });
-
-        // Insérez le bouton Modifier après le titre "Mes Projets"
-        projectsTitle.insertAdjacentElement('afterend', modifierButton);
+// Fonction pour masquer "modifier" lorsque l'utilisateur est déconnecté
+function hideModifierElement() {
+    // Vérifiez si l'utilisateur est déconnecté en vérifiant l'absence du jeton d'authentification dans le sessionStorage
+    if (sessionStorage.getItem("Token") == null) {
+        //élément de modification à masquer
+        const modifierElement = document.querySelector('.Bar-modif-2');
+        // Vérifiez si l'élément existe dans le DOM
+        if (modifierElement) {
+            // Masquez l'élément en lui ajoutant la classe 'hidden'
+            modifierElement.classList.add('hidden');
+        }
     }
 }
 
-// Fonction pour créer l'icône de fermeture
-function createCloseIcon() {
-    // Créez une balise <i> pour l'icône de fermeture
-    const closeIcon = document.createElement('i');
-    closeIcon.classList.add('fa-solid', 'fa-xmark', 'close-icon');
-    
-    // Ajoutez un gestionnaire d'événements pour la fermeture de la modal lors du clic sur l'icône
-    closeIcon.addEventListener('click', () => {
-        closeModal(); // Appel de la fonction pour fermer la modal
-    });
+// Appel de la fonction pour masquer l'élément de modification si nécessaire
+hideModifierElement();
 
-    return closeIcon; // Retourne l'icône créée
+
+// Sélectionne "myModal"  
+const modal = document.querySelector(".myModal");
+
+// Attend que le contenu de la page soit entièrement chargé
+document.addEventListener("DOMContentLoaded", function () {
+    // Sélectionne tous les boutons ayant la classe "Bar-modif-2"
+    const modalButtons = document.querySelectorAll(".Bar-modif-2");
+    
+    // Ajoute un écouteur d'événements à chaque bouton pour détecter les clics
+    modalButtons.forEach((button) => {
+        button.addEventListener("click", openModal);
+    });
+});
+
+// Fonction pour ouvrir la modal
+function openModal(e) {
+    // Empêche le comportement par défaut du clic sur le bouton
+    e.preventDefault();
+    
+    // Affiche le modal en modifiant son style CSS
+    modal.style.display = "block";
+    
+    // Supprime l'attribut aria-hidden pour rendre le modal accessible
+    modal.removeAttribute("aria-hidden");
+    
+    // Ajoute l'attribut aria-modal pour indiquer qu'il s'agit d'un modal
+    modal.setAttribute("aria-modal", "true");
+    
+    // Ajoute un écouteur d'événements pour fermer la modal en cliquant dessus
+    modal.addEventListener("click", closeModal);
+    
+    // Ajoute un écouteur d'événements pour fermer la modal en cliquant sur le bouton de fermeture
+    modal.querySelector(".close-modal").addEventListener("click", closeModal);
+    
+    // Ajoute un écouteur d'événements pour empêcher la propagation des clics à l'intérieur du modal
+    modal.querySelector(".modal-stop").addEventListener("click", stopPropagation); // indique une erreur dans la console !!!!!
 }
 
 // Fonction pour fermer la modal
-function closeModal() {
-    const modal = document.getElementById("myModal");
-    modal.style.display = "none"; // Cache la modal
+const closeModal = function (e) {
+    // Vérifie si la modal existe
+    if (modal === null) return;
+    
+    // Empêche le comportement par défaut du clic sur le bouton de fermeture
+    e.preventDefault();
+    
+    // Masque la modal en modifiant son style CSS
+    modal.style.display = "none";
+    
+    // Ajoute l'attribut aria-hidden pour masquer la modal des lecteurs d'écran
+    modal.setAttribute("aria-hidden", "true");
+    
+    // Supprime l'attribut aria-modal car la modal n'est plus ouvert
+    modal.removeAttribute("aria-modal");
+    
+    // Supprime les écouteurs d'événements 
+    modal.removeEventListener("click", closeModal);
+    modal.querySelector(".close-modal").removeEventListener("click", closeModal);
+};
+
+// Ajoute un écouteur d'événements pour détecter la pression de la touche "Escape"
+window.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" || e.key === "Esc") {
+        closeModal(e);
+    }
+});
+
+// Sélectionne l'élément qui contiendra le contenu de ma modal
+const galleryContentModalFirst = document.querySelector(".gallery-listener");
+
+// Efface le contenu précédent du conteneur de ma modal
+galleryContentModalFirst.innerHTML = "";
+
+// Parcourt tous les éléments de workStore et crée un élément pour chacun
+workStore.forEach(Work => {
+    // Crée un nouvel élément <figure> pour représenter chaque work dans la modal
+    const modalFirst = document.createElement("figure");
+
+    // Ajoute la classe CSS "gallery-popinFirst" à l'élément <figure> pour le styliser
+    modalFirst.classList.add("gallery-popinFirst");
+
+    // Définit l'ID de l'élément <figure> en utilisant l'ID unique du work
+    modalFirst.id = `modal-${Work.id}`;
+
+    // Crée un nouvel élément <img> pour afficher l'image du work
+    const imgModalFirst = document.createElement("img");
+
+    // Ajoute la classe CSS "modal-img" à l'élément <img> pour le styliser
+    imgModalFirst.classList.add("modal-img");
+
+    // Définit l'URL de l'image du travail comme source de l'élément <img>
+    imgModalFirst.src = Work.imageUrl;
+
+    // Crée un nouvel élément <i> pour représenter l'icône de la corbeille permettant de supprimer le work
+    const garbage = document.createElement("i");
+
+    // Ajoute les classes CSS nécessaires pour afficher une icône de corbeille à l'élément <i>
+    garbage.classList.add("fa-solid", "fa-trash-can", "delete-work");
+
+    // Définit un identifiant unique pour chaque icône de corbeille en utilisant l'ID unique du work
+    garbage.id = `garbage-${Work.id}`;
+
+    // Ajoute un écouteur d'événements pour détecter les clics sur l'icône de la corbeille et appeler la fonction deleteWorksModalFirst avec l'ID du work comme argument lorsqu'un clic est détecté
+    garbage.addEventListener("click", () => deleteWorksModalFirst(Work.id));
+
+    // Ajoute l'élément <img> comme enfant de l'élément <figure> pour afficher l'image du work
+    modalFirst.appendChild(imgModalFirst);
+
+    // Ajoute l'icône de la corbeille comme enfant de l'élément <figure> pour permettre la suppression du work
+    modalFirst.appendChild(garbage);
+
+    // Ajoute l'élément <figure> contenant les informations du work comme enfant de l'élément dans lequel les works sont affichés dans la modal
+    galleryContentModalFirst.appendChild(modalFirst);
+});
+// Fonction asynchrone pour supprimer un élément de ma modal
+async function deleteWorksModalFirst(id) {
+    try {
+        const response = await fetch(`http://localhost:5678/api/works/${workId}`, {
+            method: 'DELETE',
+            headers: {
+              accept: "*/*",
+              Authorization: `Bearer ${adminToken}`,
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`${response.status}`);
+        }
+
+        // Filtrer les works pour supprimer celui avec l'ID spécifié
+        works = works.filter(work => work.id !== id);
+
+        // Recréer les éléments de la modal après la suppression
+        createWorksModalFirst();
+
+        // Afficher un message indiquant que la photo a été supprimée
+        messagePhotoDeleted.style.display = "flex";
+        setTimeout(() => {
+            messagePhotoDeleted.style.display = "none";
+        }, 1500);
+
+        // Recréer tous les works
+        createWorks();
+    } catch (error) {
+        // Afficher une alerte en cas d'erreur
+        alert("Erreur : " + error);
+    }
 }
-
-// Création et ajout de l'icône de fermeture à la modal
-const closeIcon = createCloseIcon();
-const modalContent = document.querySelector('.modal-content');
-modalContent.insertBefore(closeIcon, modalContent.firstChild);
-
-// Appel de la fonction pour créer le bouton "Modifier"
-createModifierButton();

@@ -17,6 +17,10 @@
 	 
 </head>
 <body>
+<div class="Mode-bar">
+	<i class="Bar-logo fa-regular fa-pen-to-square"></i>
+	<p>Mode édition</p>
+</div>
 <header class="menu">
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
@@ -41,7 +45,14 @@
 		</article>
 	</section>
 	<section id="portfolio">
+		<div class="modif">
 		<h2>Mes Projets</h2>
+			<div class="Bar-modif-2">
+
+				<i class="Bar fa-regular fa-pen-to-square"></i>
+				<p>modifier</p>
+			</div>
+		</div>
 		<div class="filters" >
 			<button  id="0">Tous</button>
 		</div>
@@ -62,6 +73,47 @@
 			<input type="submit" value="Envoyer">
 		</form>
 	</section>
+
+	<aside class="myModal " aria-hidden="true" role="dialog" aria-labelledby="modal-title">
+		<div class="modal-content modal-delete modal-stop">
+			<div class="close-modal">
+				<i class="close-icon fa-solid fa-times"></i>
+			</div>
+			<h2 class="modal-title">Galerie photo</h2>
+			<div class="gallery-listener">
+			</div>
+			<p class="message-delete">Photo supprimée</p>
+			<button class="btn-add-photo">Ajouter une photo</button>
+		</div>
+
+		<div class="modal-content modal-add">
+			<div class="modal-popin">
+				<i class="close-icon fa-solid fa-times"></i>
+			</div>
+			<h2 class="modal-title">Ajout photo</h2>
+			<form class="photo-form" action="#" method="post">
+				<div class="photo-upload">
+					<div class="upload-content">
+						<i class="upload-icon fa-solid fa-cloud-upload-alt"></i>
+						<label class="upload-btn" for="file">Ajouter une photo</label>
+						<input id="file" type="file" name="file" accept="image/png, image/jpeg">
+						<p class="file-type">Formats acceptés : jpg, png (taille max : 4 Mo)</p>
+					</div>
+					<div class="preview"></div>
+				</div>
+				<div class="photo-details">
+					<label for="photo-title">Titre</label>
+					<input type="text" id="photo-title" name="photo-title" required>
+					<label for="photo-category">Catégorie</label>
+					<select id="photo-category" name="photo-category" required>
+						<option value="">--Choisissez une catégorie--</option>
+					</select>
+				</div>
+				<input type="submit" id="submit-btn" value="Valider">
+			</form>
+		</div>
+	</aside>
+
 </main>
 
 <footer>
@@ -71,13 +123,6 @@
 		</ul>
 	</nav>
 </footer>
-<!-- Structure HTML de la modal -->
-<div id="myModal" class="modal">
-	<div class="modal-content">
-	  <span class="close"></span>
-	  <h4>Gallerie photo</h4>
-	  <button id="confirmDelete">Supprimer</button>
-	</div>
-  </div>
+
 </body>
 </html>

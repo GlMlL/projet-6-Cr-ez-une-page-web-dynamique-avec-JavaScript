@@ -276,29 +276,84 @@ label{
 	inset: 0;
 	z-index: 10000;
 	background-color: rgba(0, 0, 0, 0.75);
-	padding: 40px;
+	
 	overflow: auto;
-	width: 100%;
-	height: 100%;
+	
   }
 
+.hidden {
+	display: none;
+}
 
+.myModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.30);
+}
 
+.modal-content {
+    background-color: #fff;
+    width: 630px;
+    max-height: calc(100vh - 20px);
+    overflow: auto;
+    border-radius: 10px;
+}
 
+.Bar-modif-2 {
+	
+	justify-content: center;
+	margin-top: -70px;
+	margin-bottom: 50px;
+	margin-left: 270px;
+	cursor: pointer;
+	gap: 5px;
 
+}
 
+.Bar-modif {
+	display: flex;
+	justify-content: center;
+	gap: 31px;
+	height: 30px;
+	margin-bottom: 50px;
+	margin-left: -30px;
+}
 
+.Mode-bar {
+	width: 100%;
+	height: 50px;
+	background-color: #000000;
+	color: #ffffff;
+	display: none;
+	align-items: center;
+	justify-content: center;
+	gap: 12px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	cursor: pointer;
+}
 
+.Bar-logo {
+	width: 15px;
+	height: 15px;
+	color: white;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
+.modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: none;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(0, 0, 0, 0.30);
+}
