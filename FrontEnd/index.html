@@ -11,8 +11,9 @@
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 	 <!--defer pour que le script soit lu après la page HTML-->
+	  <script src="assets/js/logout.js" defer></script>
 	 <script src="assets/js/api.js" defer></script>
-	 <script src="assets/js/logout.js" defer></script>
+	
 	 <script src="assets/js/modal.js" defer> </script>
 	 
 </head>
@@ -75,16 +76,7 @@
 	</section>
 
 	<aside class="myModal " aria-hidden="true" role="dialog" aria-labelledby="modal-title">
-		<div class="modal-content modal-delete modal-stop">
-			<div class="close-modal">
-				<i class="close-icon fa-solid fa-times"></i>
-			</div>
-			<h2 class="modal-title">Galerie photo</h2>
-			<div class="gallery-listener">
-			</div>
-			<p class="message-delete">Photo supprimée</p>
-			<button class="btn-add-photo">Ajouter une photo</button>
-		</div>
+		
 
 		<div class="modal-content modal-add">
 			<div class="modal-popin">
@@ -105,14 +97,25 @@
 					<label for="photo-title">Titre</label>
 					<input type="text" id="photo-title" name="photo-title" required>
 					<label for="photo-category">Catégorie</label>
-					<select id="photo-category" name="photo-category" required>
+					<select id="categorySelect">
 						<option value="">--Choisissez une catégorie--</option>
 					</select>
 				</div>
 				<input type="submit" id="submit-btn" value="Valider">
 			</form>
+			<div class="modal-content modal-delete modal-stop">
+				<div class="close-modal">
+					<i class="close-icon fa-solid fa-times"></i>
+				</div>
+				<h2 class="modal-title">Galerie photo</h2>
+				<div class="gallery-listener">
+				</div>
+				<p class="message-delete">Photo supprimée</p>
+				<button class="btn-add-photo">Ajouter une photo</button>
+			</div>
 		</div>
 	</aside>
+	
 
 </main>
 
@@ -123,6 +126,7 @@
 		</ul>
 	</nav>
 </footer>
+
 
 </body>
 </html>

@@ -1,5 +1,3 @@
-/**variables**/
-
 // Sélectionne l'élément HTML avec la classe "gallery" et le stocke dans la variable gallery
 const gallery = document.querySelector('.gallery'); /* récupère ma classe css*/
 
@@ -75,6 +73,18 @@ async function displayCategorysbutton() {
     });
 }
 
+// Fonction pour masquer les filtres si l'utilisateur est connecté
+function hideFilters() {
+    // Vérifie si l'utilisateur est connecté en vérifiant l'existence du jeton d'authentification dans le sessionStorage
+    if (sessionStorage.getItem("Token") !== null) {
+        // Masque les filtres en ajoutant la classe 'hidden' à l'élément Filters
+        Filters.classList.add('hidden');
+    }
+}
+
+// Appelle la fonction pour masquer les filtres si nécessaire
+hideFilters();
+
 displayCategorysbutton(); // Appelle la fonction displayCategorysbutton pour afficher les catégories en boutton
 
 //* filtrage au click par categorie//*
@@ -106,6 +116,7 @@ async function filterCategory(){
         });
     });
 }
+
 filterCategory(); // Appelle la fonction filterCategory pour activer le filtrage par categorie
 
 // Fonction pour masquer "modifier" lorsque l'utilisateur est déconnecté
@@ -124,7 +135,6 @@ function hideModifierElement() {
 
 // Appel de la fonction pour masquer l'élément de modification si nécessaire
 hideModifierElement();
-
 
 // Sélectionne "myModal"  
 const modal = document.querySelector(".myModal");

@@ -291,9 +291,9 @@ label{
     left: 0;
     width: 100%;
     height: 100%;
-    display: none;
-    align-items: center;
-    justify-content: center;
+    display: flex;
+    align-items: center; /* Centrer verticalement */
+    justify-content: center; /* Centrer horizontalement */
     background-color: rgba(0, 0, 0, 0.30);
 }
 
@@ -357,3 +357,5 @@ label{
 	justify-content: center;
 	background-color: rgba(0, 0, 0, 0.30);
 }
+
+
