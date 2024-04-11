@@ -60,8 +60,9 @@ async function checkAuthentication() {
         const token = sessionStorage.getItem("Token");
         if (!token) return false; // Si aucun jeton n'est stocké, l'utilisateur n'est pas authentifié
         const response = await fetch("http://localhost:5678/api/users/authenticate", {
-            method: "GET",
+            method: "DELETE",
             headers: {
+                accept: "*/*",
                 Authorization: `Bearer ${token}`,
             },
         });
