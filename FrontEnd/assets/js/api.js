@@ -130,31 +130,31 @@ function hideModifierElement() {
 }
 
 // Appel de la fonction pour masquer l'élément de modification si nécessaire
-hideModifierElement();
+//hideModifierElement();
 
-// Sélectionne "myModal"  
+// Sélectionne "myModal"
 const modal = document.querySelector(".myModal");
 
 // Fonction pour ouvrir la modal
 function openModal(e) {
     // Empêche le comportement par défaut du clic sur le bouton
     e.preventDefault();
-    
+
     // Affiche le modal en modifiant son style CSS
     modal.style.display = "block";
-    
+
     // Supprime l'attribut aria-hidden pour rendre le modal accessible
     modal.removeAttribute("aria-hidden");
-    
+
     // Ajoute l'attribut aria-modal pour indiquer qu'il s'agit d'un modal
     modal.setAttribute("aria-modal", "true");
-    
+
     // Ajoute un écouteur d'événements pour fermer la modal en cliquant dessus
     modal.addEventListener("click", closeModal);
-    
+
     // Ajoute un écouteur d'événements pour fermer la modal en cliquant sur le bouton de fermeture
     modal.querySelector(".close-modal").addEventListener("click", closeModal);
-    
+
     // Afficher les works dans la modal
     displayWorksInModal();
 };
@@ -193,40 +193,25 @@ async function displayWorksInModal() {
 
 // Fonction pour fermer la modal
 const closeModal = function (e) {
-    // Vérifie si la modal existe
-    if (modal === null) return;
-    
-    // Empêche le comportement par défaut du clic sur le bouton de fermeture
-    e.preventDefault();
-    
-    // Masque la modal en modifiant son style CSS
-    modal.style.display = "none";
-    
-    // Ajoute l'attribut aria-hidden pour masquer la modal des lecteurs d'écran
-    modal.setAttribute("aria-hidden", "true");
-    
-    // Supprime l'attribut aria-modal car la modal n'est plus ouvert
-    modal.removeAttribute("aria-modal");
-    
-    // Supprime les écouteurs d'événements 
-    modal.removeEventListener("click", closeModal);
-    modal.querySelector(".close-modal").removeEventListener("click", closeModal);
+    // Vérifie si l'événement provient de l'icône de la croix, de la touche "Esc" ou de l'extérieur de la modal
+    if (e.target.classList.contains("close-icon") || e.key === "Escape" || (modal && !modal.contains(e.target))) {
+        // Masque la modal en modifiant son style CSS
+        modal.style.display = "none";
+
+        // Ajoute l'attribut aria-hidden pour masquer la modal des lecteurs d'écran
+        modal.setAttribute("aria-hidden", "true");
+
+        // Supprime l'attribut aria-modal car la modal n'est plus ouverte
+        modal.removeAttribute("aria-modal");
+
+        // Supprime les écouteurs d'événements
+        document.removeEventListener("click", closeModal);
+        document.removeEventListener("keydown", closeModal);
+    }
 };
 
-// Ajoute un écouteur d'événements pour détecter la pression de la touche "Escape"
-window.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" || e.key === "Esc") {
-        closeModal(e);
-    }
-});
+// Ajoute un écouteur d'événements pour détecter les clics sur l'ensemble du document
+document.addEventListener("click", closeModal);
 
-// Attend que le contenu de la page soit entièrement chargé
-document.addEventListener("DOMContentLoaded", function () {
-    // Sélectionne tous les boutons ayant la classe "Bar-modif-2"
-    const modalButtons = document.querySelectorAll(".Bar-modif-2");
-    
-    // Ajoute un écouteur d'événements à chaque bouton pour détecter les clics
-    modalButtons.forEach((button) => {
-        button.addEventListener("click", openModal);
-    });
-});
+// Ajoute un écouteur d'événements pour détecter les pressions de touche sur l'ensemble du document
+document.addEventListener("keydown", closeModal);

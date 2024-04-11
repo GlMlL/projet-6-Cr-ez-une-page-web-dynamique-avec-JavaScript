@@ -1,0 +1,3 @@
+function onPhotoSubmit() {
+    event.preventDefault()
+}
