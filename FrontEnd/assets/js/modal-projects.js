@@ -4,14 +4,14 @@ async function displayGalleryContent() {
     // Récupérer les works à afficher
     const works = await getWorks();
 
-    // Effacer le contenu précédent de la galerie
+    // Effacer le contenu précédent de la modal
     galleryContainer.innerHTML = "";
 
-    // Pour chaque work, créer un élément de galerie et l'ajouter à la galerie
+    // Pour chaque work, créer un élément de galerie et l'ajouter à la modal
     works.forEach((work) => galleryContainer.appendChild(createModalGalleryItem(work)));
 }
 
-// Fonction pour supprimer un work de la galerie
+// Fonction pour supprimer un work de la modal
 async function removeWork(workId) {
     try {
         // Vérifier si l'utilisateur est authentifié avant de supprimer le work
@@ -19,7 +19,7 @@ async function removeWork(workId) {
         if (isAuthenticated) {
             // Supprimer le work correspondant
             await deleteWork(workId);
-            // Rafraîchir la galerie après la suppression
+            // Rafraîchir la modal après la suppression
             displayGalleryContent();
         } else {
             alert("Vous devez être authentifié pour supprimer une image de la galerie.");
@@ -29,7 +29,7 @@ async function removeWork(workId) {
     }
 }
 
-// Fonction pour créer un élément dans la galerie 
+// Fonction pour créer un élément dans la modal 
 function createModalGalleryItem(work) {
     const container = document.createElement("div");
     const img = document.createElement("img");
@@ -51,7 +51,7 @@ function createModalGalleryItem(work) {
     return container;
 }
 
-// Fonction appelée lors du clic sur le bouton pour ouvrir la galerie
+// Fonction appelée lors du clic sur le bouton pour ouvrir la modal
 function onOpenModalButtonClick() {
     const modalContainer = document.getElementById("project-modal");
 
