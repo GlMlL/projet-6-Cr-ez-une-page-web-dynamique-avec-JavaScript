@@ -1,20 +1,16 @@
 // Sélectionne l'élément HTML avec la classe "gallery" et le stocke dans la variable gallery
-const gallery = document.querySelector('.gallery'); /* récupère ma classe css*/
+const gallery = document.querySelector('.gallery');
 
 // Sélectionne l'element HTML avec la classe "filters" et le stocke dans la variable Filters
 const Filters = document.querySelector(".filters");
 
 let workStore = Array(); //Initialise un tableau vide nommé workStore
 
-/* fonction qui retourne le tableau des works*/
-
 // Fonction asynchrone qui recupere les works depuis l'API
 async function getWorks() {
     const response = await fetch('http://localhost:5678/api/works');
     return await response.json(); // Renvoie les works au format json
 }
-
-/* affichage des works */
 
 // Fonction asynchrone qui affiche les works
 async function displayWorks() {
@@ -139,17 +135,6 @@ hideModifierElement();
 // Sélectionne "myModal"  
 const modal = document.querySelector(".myModal");
 
-// Attend que le contenu de la page soit entièrement chargé
-document.addEventListener("DOMContentLoaded", function () {
-    // Sélectionne tous les boutons ayant la classe "Bar-modif-2"
-    const modalButtons = document.querySelectorAll(".Bar-modif-2");
-    
-    // Ajoute un écouteur d'événements à chaque bouton pour détecter les clics
-    modalButtons.forEach((button) => {
-        button.addEventListener("click", openModal);
-    });
-});
-
 // Fonction pour ouvrir la modal
 function openModal(e) {
     // Empêche le comportement par défaut du clic sur le bouton
@@ -170,8 +155,40 @@ function openModal(e) {
     // Ajoute un écouteur d'événements pour fermer la modal en cliquant sur le bouton de fermeture
     modal.querySelector(".close-modal").addEventListener("click", closeModal);
     
-    // Ajoute un écouteur d'événements pour empêcher la propagation des clics à l'intérieur du modal
-    modal.querySelector(".modal-stop").addEventListener("click", stopPropagation); // indique une erreur dans la console !!!!!
+    // Afficher les works dans la modal
+    displayWorksInModal();
+};
+
+// Fonction pour afficher les works dans la modal
+async function displayWorksInModal() {
+    // Récupérer les works depuis l'API
+    const works = await getWorks();
+
+    // Sélectionner l'élément qui contiendra le contenu de la modal
+    const galleryContentModalFirst = document.querySelector(".gallery-listener");
+
+    // Effacer le contenu précédent du conteneur de la modal
+    galleryContentModalFirst.innerHTML = "";
+
+    // Vérifier si des works ont été récupérés
+    if (works.length > 0) {
+        // Pour chaque work, créer un élément dans la modal
+        works.forEach(Work => {
+            const modalFirst = document.createElement("figure");
+            modalFirst.classList.add("gallery-popinFirst");
+            modalFirst.id = `modal-${Work.id}`;
+
+            const imgModalFirst = document.createElement("img");
+            imgModalFirst.classList.add("modal-img");
+            imgModalFirst.src = Work.imageUrl;
+
+            modalFirst.appendChild(imgModalFirst);
+            galleryContentModalFirst.appendChild(modalFirst);
+        });
+    } else {
+        // Afficher un message si aucun work n'est disponible
+        galleryContentModalFirst.innerHTML = "<p>Aucun work disponible.</p>";
+    }
 }
 
 // Fonction pour fermer la modal
@@ -203,84 +220,13 @@ window.addEventListener("keydown", function (e) {
     }
 });
 
-// Sélectionne l'élément qui contiendra le contenu de ma modal
-const galleryContentModalFirst = document.querySelector(".gallery-listener");
-
-// Efface le contenu précédent du conteneur de ma modal
-galleryContentModalFirst.innerHTML = "";
-
-// Parcourt tous les éléments de workStore et crée un élément pour chacun
-workStore.forEach(Work => {
-    // Crée un nouvel élément <figure> pour représenter chaque work dans la modal
-    const modalFirst = document.createElement("figure");
-
-    // Ajoute la classe CSS "gallery-popinFirst" à l'élément <figure> pour le styliser
-    modalFirst.classList.add("gallery-popinFirst");
-
-    // Définit l'ID de l'élément <figure> en utilisant l'ID unique du work
-    modalFirst.id = `modal-${Work.id}`;
-
-    // Crée un nouvel élément <img> pour afficher l'image du work
-    const imgModalFirst = document.createElement("img");
-
-    // Ajoute la classe CSS "modal-img" à l'élément <img> pour le styliser
-    imgModalFirst.classList.add("modal-img");
-
-    // Définit l'URL de l'image du travail comme source de l'élément <img>
-    imgModalFirst.src = Work.imageUrl;
-
-    // Crée un nouvel élément <i> pour représenter l'icône de la corbeille permettant de supprimer le work
-    const garbage = document.createElement("i");
-
-    // Ajoute les classes CSS nécessaires pour afficher une icône de corbeille à l'élément <i>
-    garbage.classList.add("fa-solid", "fa-trash-can", "delete-work");
-
-    // Définit un identifiant unique pour chaque icône de corbeille en utilisant l'ID unique du work
-    garbage.id = `garbage-${Work.id}`;
-
-    // Ajoute un écouteur d'événements pour détecter les clics sur l'icône de la corbeille et appeler la fonction deleteWorksModalFirst avec l'ID du work comme argument lorsqu'un clic est détecté
-    garbage.addEventListener("click", () => deleteWorksModalFirst(Work.id));
-
-    // Ajoute l'élément <img> comme enfant de l'élément <figure> pour afficher l'image du work
-    modalFirst.appendChild(imgModalFirst);
-
-    // Ajoute l'icône de la corbeille comme enfant de l'élément <figure> pour permettre la suppression du work
-    modalFirst.appendChild(garbage);
-
-    // Ajoute l'élément <figure> contenant les informations du work comme enfant de l'élément dans lequel les works sont affichés dans la modal
-    galleryContentModalFirst.appendChild(modalFirst);
+// Attend que le contenu de la page soit entièrement chargé
+document.addEventListener("DOMContentLoaded", function () {
+    // Sélectionne tous les boutons ayant la classe "Bar-modif-2"
+    const modalButtons = document.querySelectorAll(".Bar-modif-2");
+    
+    // Ajoute un écouteur d'événements à chaque bouton pour détecter les clics
+    modalButtons.forEach((button) => {
+        button.addEventListener("click", openModal);
+    });
 });
-// Fonction asynchrone pour supprimer un élément de ma modal
-async function deleteWorksModalFirst(id) {
-    try {
-        const response = await fetch(`http://localhost:5678/api/works/${workId}`, {
-            method: 'DELETE',
-            headers: {
-              accept: "*/*",
-              Authorization: `Bearer ${adminToken}`,
-            },
-        });
-
-        if (!response.ok) {
-            throw new Error(`${response.status}`);
-        }
-
-        // Filtrer les works pour supprimer celui avec l'ID spécifié
-        works = works.filter(work => work.id !== id);
-
-        // Recréer les éléments de la modal après la suppression
-        createWorksModalFirst();
-
-        // Afficher un message indiquant que la photo a été supprimée
-        messagePhotoDeleted.style.display = "flex";
-        setTimeout(() => {
-            messagePhotoDeleted.style.display = "none";
-        }, 1500);
-
-        // Recréer tous les works
-        createWorks();
-    } catch (error) {
-        // Afficher une alerte en cas d'erreur
-        alert("Erreur : " + error);
-    }
-}
