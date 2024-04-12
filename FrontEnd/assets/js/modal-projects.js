@@ -14,16 +14,10 @@ async function displayGalleryContent() {
 // Fonction pour supprimer un work de la modal
 async function removeWork(workId) {
     try {
-        // Vérifier si l'utilisateur est authentifié avant de supprimer le work
-        const isAuthenticated = await checkAuthentication();
-        if (isAuthenticated) {
-            // Supprimer le work correspondant
-            await deleteWork(workId);
-            // Rafraîchir la modal après la suppression
-            displayGalleryContent();
-        } else {
-            alert("Vous devez être authentifié pour supprimer une image de la galerie.");
-        }
+        // Supprimer le work correspondant
+        await deleteWork(workId);
+        // Rafraîchir la modal après la suppression
+        await displayGalleryContent();
     } catch (error) {
         console.error("Une erreur s'est produite lors de la suppression de l'œuvre :", error);
     }
@@ -61,3 +55,26 @@ function onOpenModalButtonClick() {
     displayGalleryContent();
 }
 
+async function deleteWork(workId) {
+    try {
+      // Afficher une boîte de dialogue de confirmation
+      const confirmation = window.confirm("Êtes-vous sûr de vouloir supprimer ce travail ?");
+  
+      // Vérifier si l'utilisateur a confirmé la suppression
+      if (confirmation) {
+        const adminToken = sessionStorage.getItem("Token");
+        const response = await fetch(`http://localhost:5678/api/works/${workId}`, {
+          method: 'DELETE',
+          headers: {
+            accept: "*!/!*",
+            Authorization: `Bearer ${adminToken}`,
+          },
+        });
+        if (!response.ok) {
+            alert("Erreur lors de la suppression du travail.");
+        }
+      }
+    } catch (error) {
+      alert("Erreur lors de la suppression du travail.");
+    }
+  }

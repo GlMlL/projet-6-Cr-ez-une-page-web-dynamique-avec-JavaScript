@@ -113,7 +113,7 @@ async function filterCategory(){
     });
 }
 
-filterCategory(); // Appelle la fonction filterCategory pour activer le filtrage par categorie
+//filterCategory(); // Appelle la fonction filterCategory pour activer le filtrage par categorie
 
 // Fonction pour masquer "modifier" lorsque l'utilisateur est déconnecté
 function hideModifierElement() {
@@ -130,88 +130,7 @@ function hideModifierElement() {
 }
 
 // Appel de la fonction pour masquer l'élément de modification si nécessaire
-//hideModifierElement();
+hideModifierElement();
 
-// Sélectionne "myModal"
-const modal = document.querySelector(".myModal");
 
-// Fonction pour ouvrir la modal
-function openModal(e) {
-    // Empêche le comportement par défaut du clic sur le bouton
-    e.preventDefault();
 
-    // Affiche le modal en modifiant son style CSS
-    modal.style.display = "block";
-
-    // Supprime l'attribut aria-hidden pour rendre le modal accessible
-    modal.removeAttribute("aria-hidden");
-
-    // Ajoute l'attribut aria-modal pour indiquer qu'il s'agit d'un modal
-    modal.setAttribute("aria-modal", "true");
-
-    // Ajoute un écouteur d'événements pour fermer la modal en cliquant dessus
-    modal.addEventListener("click", closeModal);
-
-    // Ajoute un écouteur d'événements pour fermer la modal en cliquant sur le bouton de fermeture
-    modal.querySelector(".close-modal").addEventListener("click", closeModal);
-
-    // Afficher les works dans la modal
-    displayWorksInModal();
-};
-
-// Fonction pour afficher les works dans la modal
-async function displayWorksInModal() {
-    // Récupérer les works depuis l'API
-    const works = await getWorks();
-
-    // Sélectionner l'élément qui contiendra le contenu de la modal
-    const galleryContentModalFirst = document.querySelector(".gallery-listener");
-
-    // Effacer le contenu précédent du conteneur de la modal
-    galleryContentModalFirst.innerHTML = "";
-
-    // Vérifier si des works ont été récupérés
-    if (works.length > 0) {
-        // Pour chaque work, créer un élément dans la modal
-        works.forEach(Work => {
-            const modalFirst = document.createElement("figure");
-            modalFirst.classList.add("gallery-popinFirst");
-            modalFirst.id = `modal-${Work.id}`;
-
-            const imgModalFirst = document.createElement("img");
-            imgModalFirst.classList.add("modal-img");
-            imgModalFirst.src = Work.imageUrl;
-
-            modalFirst.appendChild(imgModalFirst);
-            galleryContentModalFirst.appendChild(modalFirst);
-        });
-    } else {
-        // Afficher un message si aucun work n'est disponible
-        galleryContentModalFirst.innerHTML = "<p>Aucun work disponible.</p>";
-    }
-}
-
-// Fonction pour fermer la modal
-const closeModal = function (e) {
-    // Vérifie si l'événement provient de l'icône de la croix, de la touche "Esc" ou de l'extérieur de la modal
-    if (e.target.classList.contains("close-icon") || e.key === "Escape" || (modal && !modal.contains(e.target))) {
-        // Masque la modal en modifiant son style CSS
-        modal.style.display = "none";
-
-        // Ajoute l'attribut aria-hidden pour masquer la modal des lecteurs d'écran
-        modal.setAttribute("aria-hidden", "true");
-
-        // Supprime l'attribut aria-modal car la modal n'est plus ouverte
-        modal.removeAttribute("aria-modal");
-
-        // Supprime les écouteurs d'événements
-        document.removeEventListener("click", closeModal);
-        document.removeEventListener("keydown", closeModal);
-    }
-};
-
-// Ajoute un écouteur d'événements pour détecter les clics sur l'ensemble du document
-document.addEventListener("click", closeModal);
-
-// Ajoute un écouteur d'événements pour détecter les pressions de touche sur l'ensemble du document
-document.addEventListener("keydown", closeModal);
