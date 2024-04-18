@@ -45,6 +45,12 @@ function createModalGalleryItem(work) {
     return container;
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+    const barModif2 = document.querySelector('.Bar-modif-2');
+
+    barModif2.addEventListener('click', onOpenModalButtonClick);
+});
+
 // Fonction appelée lors du clic sur le bouton pour ouvrir la modal
 function onOpenModalButtonClick() {
     const modalContainer = document.getElementById("project-modal");
@@ -78,3 +84,9 @@ async function deleteWork(workId) {
       alert("Erreur lors de la suppression du travail.");
     }
   }
+
+  document.querySelector('.add-button').addEventListener('click', () => {
+    document.querySelectorAll('.modal-content').forEach((m) => {
+        m.classList.toggle('hidden');
+    });
+});

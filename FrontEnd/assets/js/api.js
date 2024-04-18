@@ -113,23 +113,23 @@ async function filterCategory(){
     });
 }
 
-//filterCategory(); // Appelle la fonction filterCategory pour activer le filtrage par categorie
+filterCategory(); // Appelle la fonction filterCategory pour activer le filtrage par categorie
 
-// Fonction pour masquer "modifier" lorsque l'utilisateur est déconnecté
 function hideModifierElement() {
     // Vérifiez si l'utilisateur est déconnecté en vérifiant l'absence du jeton d'authentification dans le sessionStorage
     if (sessionStorage.getItem("Token") == null) {
-        //élément de modification à masquer
-        const modifierElement = document.querySelector('.Bar-modif-2');
-        // Vérifiez si l'élément existe dans le DOM
-        if (modifierElement) {
+        // Sélectionnez tous les éléments de modification à masquer
+        const modifierElements = document.querySelectorAll('.Bar-modif-2, .Mode-bar');
+        
+        // Parcourez tous les éléments sélectionnés
+        modifierElements.forEach(modifierElement => {
             // Masquez l'élément en lui ajoutant la classe 'hidden'
             modifierElement.classList.add('hidden');
-        }
+        });
     }
 }
 
-// Appel de la fonction pour masquer l'élément de modification si nécessaire
+// Appel de la fonction pour masquer les éléments de modification lors du chargement de la page
 hideModifierElement();
 
 

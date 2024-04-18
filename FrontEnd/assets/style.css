@@ -269,19 +269,25 @@ label{
 }
 
 .hidden {
-	display: none;
+	display: none !important;
 }
 
+#portfolio h2{
+	text-align: center;
+	margin-bottom: 1em;
+	padding-right: 20px;
+}
+
+.modif{
+	display: flex;
+	justify-content: center;
+	align-items: baseline;
+}
 
 .Bar-modif-2 {
 	
-	justify-content: center;
-	margin-top: -70px;
-	margin-bottom: 50px;
-	margin-left: 270px;
+	display: flex;
 	cursor: pointer;
-	gap: 5px;
-
 }
 
 .Bar-modif {
@@ -294,17 +300,13 @@ label{
 }
 
 .Mode-bar {
-	width: 100%;
+	display: flex;
 	height: 50px;
 	background-color: #000000;
 	color: #ffffff;
-	display: none;
 	align-items: center;
 	justify-content: center;
 	gap: 12px;
-	position: absolute;
-	top: 0;
-	left: 0;
 	cursor: pointer;
 }
 
@@ -348,6 +350,12 @@ label{
 .modal-button-close {
 	background-color: white;
 	border: none;
+	font-size: larger;
+	color: #000000;
+	font-weight: 700;
+	position: relative;
+	top: 5px;
+	right: 5px;
 }
 
 .modal-content {
@@ -359,6 +367,10 @@ label{
 
 .modal-title {
 	margin-bottom: 2em;
+	font-family: "Work sans";
+	font-weight: 400;
+	font-size: 26px;
+	color: rgba(0, 0, 0, 1);
 }
 
 #modal-gallery {
@@ -372,22 +384,33 @@ label{
 }
 
 .fa-solid  {
-	position: absolute;
-	right: 10px;
-	top: 10px;
-	color: #ffffff;
-	background-color: #000000;
+	position: relative;
+	right: 33px;
+	top: -85px;
 	border: none;
 	height: 20px;
+	font-size:12px; 
+	color: white;
+	background-color: #000000;
+	border-radius: 2px;
 
 }
 
-.fa-solid .arrow-left{
+.fleche-droite{
 	display: flex;
 	position: relative;
-	top: 20px;
-	right: 290px;
+	top: -15px;
+	right: 285px;
 	font-size: 30px;
+	color: rgba(0, 0, 0, 1);
+	background-color: white;
+}
+
+i.fa-regular.fa-image{
+	font-family: "Font Awesome 6 free";
+	font-weight: 400;
+	font-size: 75px;
+	color: rgba(185, 197, 204, 1);
 }
 
 .modal-gallery-img {
@@ -407,9 +430,13 @@ label{
 	font-family: 'Syne';
 	background-color: #1D6154;
 	color: white;
-	
-	
 
+}
+
+.button-add{
+	position: relative;
+	bottom: -283px;
+	right: -99px;
 }
 
 #trait_dessus
@@ -499,5 +526,9 @@ label.label{
 	color: #b3b3b3;
 	width: 420px;
 	border: 1px solid #b3b3b3;
+	position: relative;
+	bottom: 40px;
+	right: 100px;
 }
+
 
