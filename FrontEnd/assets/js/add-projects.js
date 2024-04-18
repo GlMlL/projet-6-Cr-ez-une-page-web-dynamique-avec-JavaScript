@@ -5,7 +5,7 @@ const addPhotoButton = document.querySelector(".upload-btn");
 // Ajouter un écouteur d'événements sur le bouton d'ajout de photo
 addPhotoButton.addEventListener("click", () => {
     // Cliquer sur l'élément de type 'file' (input type="file") lorsque le bouton est cliqué
-    document.getElementById("image").click();
+    document.getElementById("image");
 });
 
 // Ajouter un écouteur d'événements sur le changement de valeur de l'input type="file"
@@ -24,10 +24,15 @@ function onPhotoSubmit(event) {
     const formData = new FormData(photoForm);
 
     // Envoyer les données du formulaire à l'API
+    const adminToken = sessionStorage.getItem("Token");
     fetch("http://localhost:5678/api/works", {
         method: "POST",
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${adminToken}`, // Utilisation du token récupéré depuis la session
+        },
         body: formData,
-    })
+      })
     .then(response => {
         if (response.ok) {
             alert("Photo ajoutée avec succès !");
