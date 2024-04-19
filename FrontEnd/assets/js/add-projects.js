@@ -22,9 +22,7 @@ document.getElementById("image").addEventListener("change", () => {
         previewImage.src = imageURL;
         previewImage.style.display = "block";
 
-        // Afficher le nom du fichier sélectionné
-        previewText.textContent = `Fichier sélectionné : ${file.name}`;
-        previewText.style.display = "block";
+       
     } else {
         // Cacher l'image et le texte de prévisualisation si aucun fichier n'est sélectionné
         previewImage.style.display = "none";
