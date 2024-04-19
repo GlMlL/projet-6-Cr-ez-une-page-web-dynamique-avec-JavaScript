@@ -91,22 +91,22 @@ async function deleteWork(workId) {
     });
 });
 
-// Sélectionnez l'élément avec la classe ".icon-modal-add"
+// Sélectionne l'élément avec la classe ".icon-modal-add"
 const iconModalAdd = document.querySelector('.icon-modal-add');
 
-// Ajoutez un écouteur d'événements au clic sur l'icône d'ajout modal
+// Ajoute un écouteur d'événements au clic sur l'icône d'ajout modal
 iconModalAdd.addEventListener('click', () => {
-    // Sélectionnez tous les éléments ".modal-content"
+    // Sélectionne tous les éléments ".modal-content"
     const modalContents = document.querySelectorAll('.modal-content');
 
-    // Parcourez chaque élément ".modal-content"
+    // Parcoure chaque élément ".modal-content"
     modalContents.forEach((m) => {
         // Vérifiez si la classe 'hidden' est présente
         if (m.classList.contains('hidden')) {
-            // Si la classe 'hidden' est présente, supprimez-la pour afficher le contenu
+            // Si la classe 'hidden' est présente, on la supprime pour afficher le contenu
             m.classList.remove('hidden');
         } else {
-            // Sinon, ajoutez la classe 'hidden' pour masquer le contenu
+            // Sinon, ajoute une classe 'hidden' pour masquer le contenu
             m.classList.add('hidden');
         }
     });

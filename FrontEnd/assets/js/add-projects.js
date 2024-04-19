@@ -8,12 +8,28 @@ addPhotoButton.addEventListener("click", () => {
     document.getElementById("image");
 });
 
-// Ajouter un écouteur d'événements sur le changement de valeur de l'input type="file"
 document.getElementById("image").addEventListener("change", () => {
-    // Afficher le nom du fichier sélectionné dans l'élément de prévisualisation
     const file = document.getElementById("image").files[0];
-    const preview = document.querySelector(".preview");
-    preview.textContent = `Fichier sélectionné : ${file.name}`;
+    const previewImage = document.getElementById("preview-image");
+    const previewText = document.getElementById("preview-text");
+
+    // Vérifier si un fichier est sélectionné
+    if (file) {
+        // Créer un objet URL pour l'image sélectionnée
+        const imageURL = URL.createObjectURL(file);
+
+        // Afficher l'image en prévisualisation
+        previewImage.src = imageURL;
+        previewImage.style.display = "block";
+
+        // Afficher le nom du fichier sélectionné
+        previewText.textContent = `Fichier sélectionné : ${file.name}`;
+        previewText.style.display = "block";
+    } else {
+        // Cacher l'image et le texte de prévisualisation si aucun fichier n'est sélectionné
+        previewImage.style.display = "none";
+        previewText.style.display = "none";
+    }
 });
 
 // Fonction pour gérer la soumission du formulaire
