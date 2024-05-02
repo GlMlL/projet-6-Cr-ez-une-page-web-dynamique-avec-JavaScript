@@ -11,7 +11,7 @@ addPhotoButton.addEventListener("click", () => {
 document.getElementById("image").addEventListener("change", () => {
     const file = document.getElementById("image").files[0];
     const previewImage = document.getElementById("preview-image");
-    const previewText = document.getElementById("preview-text");
+    const previewBox = document.querySelector(".preview"); //div qui englobe l'image et le texte
 
     // Vérifier si un fichier est sélectionné
     if (file) {
@@ -20,13 +20,14 @@ document.getElementById("image").addEventListener("change", () => {
 
         // Afficher l'image en prévisualisation
         previewImage.src = imageURL;
-        previewImage.style.display = "block";
+        previewBox.classList.toggle('hidden');
+        document.querySelector(".upload-content").classList.toggle('hidden');
 
        
     } else {
         // Cacher l'image et le texte de prévisualisation si aucun fichier n'est sélectionné
-        previewImage.style.display = "none";
-        previewText.style.display = "none";
+        
+        previewBox.classList.add('hidden');
     }
 });
 
@@ -44,6 +45,7 @@ function onPhotoSubmit(event) {
         headers: {
           Accept: "application/json",
           Authorization: `Bearer ${adminToken}`, // Utilisation du token récupéré depuis la session
+          
         },
         body: formData,
       })
@@ -60,3 +62,5 @@ function onPhotoSubmit(event) {
         console.error("Une erreur s'est produite lors de l'ajout de la photo :", error);
     });
 }
+photoForm.addEventListener( 'submit', onPhotoSubmit);
+
