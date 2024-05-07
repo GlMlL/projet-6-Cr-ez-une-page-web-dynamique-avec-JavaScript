@@ -1,63 +1,86 @@
-// Récupérer le formulaire et le bouton d'ajout de photo
-
+// Sélection du bouton de chargement de fichier
 const addPhotoButton = document.querySelector(".upload-btn");
 
-
-
-document.getElementById("image").addEventListener("change", () => {
+// Ajout d'un écouteur d'événements pour le changement du bouton de chargement de fichier
+addPhotoButton.addEventListener("change", () => {
+    // Récupération du fichier sélectionné dans le champ d'entrée de fichier avec l'ID "image"
     const file = document.getElementById("image").files[0];
+    // Sélection de l'élément img qui servira à afficher l'aperçu de l'image
     const previewImage = document.getElementById("preview-image");
-    const previewBox = document.querySelector(".preview"); //div qui englobe l'image et le texte
+    // Sélection de la div de prévisualisation qui contient l'image de prévisualisation
+    const previewBox = document.querySelector(".preview");
 
-    // Vérifier si un fichier est sélectionné
+    // Vérification si un fichier a été sélectionné
     if (file) {
-        // Créer un objet URL pour l'image sélectionnée
+        // Création d'une URL objet pour le fichier sélectionné
         const imageURL = URL.createObjectURL(file);
-
-        // Afficher l'image en prévisualisation
+        // Mise à jour de la source de l'image de prévisualisation avec l'URL objet
         previewImage.src = imageURL;
+        // Affichage ou masquage de la div de prévisualisation en basculant la classe 'hidden'
         previewBox.classList.toggle('hidden');
+        // Masquage du contenu de chargement en basculant la classe 'hidden'
         document.querySelector(".upload-content").classList.toggle('hidden');
-
-       
     } else {
-        // Cacher l'image et le texte de prévisualisation si aucun fichier n'est sélectionné
-        
+        // Si aucun fichier n'est sélectionné, masquer la div de prévisualisation
         previewBox.classList.add('hidden');
     }
 });
 
-// Fonction pour gérer la soumission du formulaire
-function onPhotoSubmit(event) {
-    event.preventDefault();
+// Ajout d'un écouteur d'événements pour la soumission du formulaire
+document.getElementById("photo-form").addEventListener("submit", event => {
+    event.preventDefault(); // Empêche le comportement par défaut de soumission du formulaire
 
-    // Récupérer les données du formulaire
+    // Création d'un objet FormData pour récupérer les données du formulaire
     const formData = new FormData(event.target);
-   
-
-    // Envoyer les données du formulaire à l'API
+    
+    // Récupération du token d'administrateur depuis la session
     const adminToken = sessionStorage.getItem("Token");
+
+    // Envoi de la requête POST au serveur avec les données du formulaire
     fetch("http://localhost:5678/api/works", {
         method: "POST",
         headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${adminToken}`, // Utilisation du token récupéré depuis la session
-          
+            Accept: "application/json",
+            Authorization: `Bearer ${adminToken}`
         },
         body: formData,
-      })
+    })
     .then(response => {
+        // Gestion de la réponse de la requête
         if (response.ok) {
+            // Si la réponse est OK, afficher une alerte de succès et actualiser la galerie d'images
             alert("Photo ajoutée avec succès !");
-            // Rafraîchir la galerie après l'ajout de la photo (si nécessaire)
             displayGalleryContent();
         } else {
+            // Si la réponse est différente de OK, afficher une alerte d'erreur
             alert("Une erreur s'est produite lors de l'ajout de la photo.");
         }
     })
     .catch(error => {
+        // Gestion des erreurs de requête
         console.error("Une erreur s'est produite lors de l'ajout de la photo :", error);
     });
-}
-document.getElementById("photo-form").addEventListener( 'submit', onPhotoSubmit);
+});
 
+// Fonction pour activer ou désactiver le bouton valider
+function toggleSubmitButton() {
+    // Sélection des éléments du formulaire
+    const previewImageInput = document.getElementById("image");
+    const formSelectInput = document.querySelector("#category");
+    const formTitleInput = document.querySelector("#title");
+    const btnSubmit = document.querySelector("#submit-btn");
+
+    // Vérification si un fichier est sélectionné
+    const fileSelected = previewImageInput.files && previewImageInput.files.length > 0;
+
+    // Vérification si le formulaire est valide
+    const formValid =
+        (fileSelected || previewImageInput.value) &&
+        formSelectInput.value.trim() !== "" &&
+        formTitleInput.value.trim() !== "";
+
+    // Activation ou désactivation du bouton valider en fonction de la validité du formulaire
+    btnSubmit.disabled = !formValid;
+    // Ajout ou suppression de la classe 'enabled' en fonction de la validité du formulaire
+    btnSubmit.classList.toggle("enabled", formValid);
+}

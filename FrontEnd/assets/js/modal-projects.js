@@ -1,5 +1,5 @@
 async function displayGalleryContent() {
-    const galleryContainer = document.getElementById("modal-gallery");
+    const galleryContainer = document.getElementById("modal-gallery2");
 
     // Récupérer les works à afficher
     const works = await getWorks();

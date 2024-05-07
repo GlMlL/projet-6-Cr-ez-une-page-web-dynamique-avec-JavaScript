@@ -307,7 +307,7 @@ label{
 	align-items: center;
 	justify-content: center;
 	gap: 12px;
-	cursor: pointer;
+	
 }
 
 .Bar-logo {
@@ -338,7 +338,7 @@ label{
 	height: 688px;
 	width: 630px;
 	border-radius: 5px;
-	overflow: auto;
+	
 }
 
 
@@ -377,10 +377,14 @@ label{
 }
 
 #modal-gallery {
-	display: flex;
-	flex-flow: wrap;
+	
 	width: 430px;
 	flex: 1 1 100%;
+}
+
+#modal-gallery2{
+	display: flex;
+	flex-flow: wrap;
 }
 
 .modal-gallery-item {
@@ -388,15 +392,16 @@ label{
 }
 
 .fa-solid  {
-	position: relative;
-	right: 33px;
-	top: -85px;
+	position: absolute;
+	right: 13px;
+	top:22px;
 	border: none;
 	height: 20px;
 	font-size:12px; 
 	color: white;
 	background-color: #000000;
 	border-radius: 2px;
+	cursor: pointer;
 
 }
 
@@ -423,6 +428,7 @@ i.fa-regular.fa-image{
 	height: 103px;
 	width: 77px;
 	margin: 4px;
+	margin-top: 15px;
 }
 
 .add-button{
@@ -436,6 +442,9 @@ i.fa-regular.fa-image{
 	font-family: 'Syne';
 	background-color: #1D6154;
 	color: white;
+	width: 237px;
+	height: 36px;
+	margin-bottom: 20px;
 
 }
 
@@ -509,7 +518,9 @@ label.label{
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	margin-top: 5em;
+	margin-top: 143px;
+	width: 237px;
+	height: 36px;
 }
 
 .upload-content{
@@ -538,6 +549,10 @@ label.label{
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
+.line{
+	height: 55px;
+}
+
 .line::before{
 	content: "";
 	display: block;
@@ -545,6 +560,7 @@ label.label{
 	position: absolute;
 	width: 68%;
 	height: 1px;
+	bottom:19% ;
 	left: 16%;
 	background-color: rgba(179, 179, 179, 1)
 }
@@ -565,3 +581,12 @@ label.label{
 	max-height: 193px;
 }
 
+.enabled {
+	background-color: green;
+	cursor: pointer;
+  }
+
+.disabled {
+	background-color: grey;
+	cursor: not-allowed;
+  }
