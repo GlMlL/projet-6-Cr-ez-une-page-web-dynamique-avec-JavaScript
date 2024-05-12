@@ -1,5 +1,5 @@
 // Sélection du bouton de chargement de fichier
-const addPhotoButton = document.querySelector(".upload-btn");
+const addPhotoButton = document.querySelector(".upload");
 
 // Ajout d'un écouteur d'événements pour le changement du bouton de chargement de fichier
 addPhotoButton.addEventListener("change", () => {
