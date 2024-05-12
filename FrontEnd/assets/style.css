@@ -581,12 +581,12 @@ label.label{
 	max-height: 193px;
 }
 
-.enabled {
-	background-color: green;
+#submit-btn:enabled {
+	background-color: #1D6154;
 	cursor: pointer;
   }
 
-  #submit-btn:disabled {
+#submit-btn:disabled {
     background-color: #ccc;
     color: #666;
     cursor: not-allowed; 

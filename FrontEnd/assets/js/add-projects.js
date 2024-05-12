@@ -56,7 +56,7 @@ document.getElementById("photo-form").addEventListener("submit", event => {
             alert("Une erreur s'est produite lors de l'ajout de la photo.");
         }
     })
-    .catch(error => {
+     .catch(error => {
         // Gestion des erreurs de requête
         console.error("Une erreur s'est produite lors de l'ajout de la photo :", error);
     });
@@ -66,9 +66,9 @@ document.getElementById("photo-form").addEventListener("submit", event => {
 function toggleSubmitButton() {
     // Sélection des éléments du formulaire
     const previewImageInput = document.getElementById("image");
-    const formSelectInput = document.querySelector("#category");
-    const formTitleInput = document.querySelector("#title");
-    const btnSubmit = document.querySelector("#submit-btn");
+    const formSelectInput = document.getElementById("category");
+    const formTitleInput = document.getElementById("title");
+    const btnSubmit = document.getElementById("submit-btn");
 
     // Vérification si un fichier est sélectionné
     const fileSelected = previewImageInput.files && previewImageInput.files.length > 0;
@@ -82,5 +82,6 @@ function toggleSubmitButton() {
     // Activation ou désactivation du bouton valider en fonction de la validité du formulaire
     btnSubmit.disabled = !formValid;
     // Ajout ou suppression de la classe 'enabled' en fonction de la validité du formulaire
-    btnSubmit.classList.toggle("enabled", formValid);
+    
 }
+document.querySelector("#photo-form").addEventListener('change',toggleSubmitButton);
