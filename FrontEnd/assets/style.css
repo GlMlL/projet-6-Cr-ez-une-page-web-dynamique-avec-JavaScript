@@ -587,7 +587,7 @@ label.label{
   }
 
   #submit-btn:disabled {
-    background-color: #ccc; /* Couleur de fond grise */
-    color: #666; /* Couleur du texte grise */
-    cursor: not-allowed; /* Curseur interdit */
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed; 
 }
